@@ -7,6 +7,7 @@ The **ENACT Data Quality Explorer** (DQE) is an interactive visualization web to
 DQE helps users to see these issues by comparing the percentage of patients associated with a ontology concept at a site to the average percentage from the network. THe idea is that the percentage of patients associated with a ontology concept every element should be similar, within some statistical variation. If your site's percentage is 2-standard deviations away than the network, then it suggests that your site's percentage for that concept is an outlier, which may warrant investigation on the root cause -- missing part of the tree while counting, buggy ETL script, etc.. It is worth nothing that there can be perfectly valid reasons for outliers, such as geographical variations (e.g. skin cancer near sunny states, ski-accidents in colder states) or specialized healthcare sites (e.g. children's hospital would have very different disease profiles as compared to cancer centers).
 
 [Full Video Demo of the ENACT Data Quality Explorer (6:27)](https://youtu.be/O1qiLYkIhEs)
+
 [Abridged Version (2:10)](https://www.youtube.com/watch?v=3xECB-U-3-c)
 
 DQE juxtposes a site's data to the network statistics and automatically highlights outliers. It makes the following assumptions:
