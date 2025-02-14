@@ -1,0 +1,189 @@
+<!--
+/*******************************************************************************
+ * Copyright (c) 2023-2025 Massachusetts General Hospital 
+ * All rights reserved. The ENACT Data Quality Explorer (this program) 
+ * and the accompanying materials are made available under the terms 
+ * of the accompanying Mozilla Public License, v. 2.0 
+ * and the Healthcare Disclaimer: https://www.i2b2.org/software/i2b2_license.html
+********************************************************************************/
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ENACT Data Quality Explorer</title>
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" /> <!-- default datatables styles -->
+		<link rel="stylesheet" href="dqe.css">
+	</head>
+	<body>	
+		<div id="foundation">
+			<div id="header">
+				<div>
+					<img id="logo" border="0" class="text-center" style="height:54px"> <!-- Loads image specified by streeConfig.logoImageRelativePath (config.js) when Document Ready -->
+				</div>
+				<label id="tutorialButton" class="controlButton"> Start Tutorial </label>
+				<label id="viewVideoButton" class="controlButton"> Demo Video </label>
+				<label id="readDocButton" class="controlButton"> Documentation </label>
+			</div>
+
+			<div class="main-split_pane">
+				<div id="control_panel">
+					<div class="tab">
+						<button id="mainTabLink" class="tablinks" onclick="controlTabClicked(event, 'tab_main')">Main</button>
+						<button class="tablinks" onclick="controlTabClicked(event, 'tab_table')">Table</button>
+						<!-- <button class="tablinks" onclick="controlTabClicked(event, 'tab_options')">Options</button> -->
+					</div>
+					
+					<div id="tab_main" class="control_tabcontent">
+						<label for="file-selector" id="fileChooserButton" class="controlButton">1. Choose a Totalnum File</label>
+						<input type="file" id="file-selector" onclick="this.value=null;" accept=".tsv, .csv, .txt" label="label" title="title">
+						<div id="file-name-display" class="file-not-loaded">No File Loaded</div>											
+						<label for="domain_selector" id="domain_selector_label" class="controlButton domain_selector_ui">2. Select a Domain:</label>
+						<select id="domain_selector" class="domain_selector_ui">
+						</select>
+
+						<div id="detail_box" style="">
+							<div id="detail_title" class="data_row_title"></div>
+							<div class="detail_table">
+								<div id="detail_site_header" class="treeNode header_row">Site Data</div>
+								<div id="detail_count" class="treeNode data_row "></div>
+								<div id="detail_percent" class="treeNode data_row "></div>
+								<div id="detail_network_header" class="treeNode header_row">Network Stats</div>
+								<div id="detail_mean" class="treeNode data_row"></div>
+								<div id="detail_stdv" class="treeNode data_row"></div>
+								<div id="detail_max" class="treeNode data_row"></div>
+								<div id="detail_q3" class="treeNode data_row"></div>
+								<div id="detail_median" class="treeNode data_row"></div>
+								<div id="detail_q1" class="treeNode data_row"></div>
+								<div id="detail_min" class="treeNode data_row"></div>
+								<div id="detail_site_count" class="treeNode data_row"></div>
+								<div id="detail_id" class="treeNode data_row"></div>
+								<div id="detail_sumNode_total_count" class="sumNode header_row"></div>
+								<div id="detail_sumNode_outlier_count" class="sumNode header_row"></div>
+								<div id="detail_sumNode_higher_count" class="sumNode data_row"></div>
+								<div id="detail_sumNode_lower_count" class="sumNode data_row"></div>
+							</div>
+							<div class="detail_graph">
+								<svg id="detail_graph_svg"></svg>
+							</div>
+						</div>
+					</div> <!--tab_main-->
+					<div id="tab_table" class="control_tabcontent">
+						<div id="tablePanel">
+							<div id="table_div">
+								<table id="myTable" class="display">
+									<thead>
+										<tr>
+											<th>name</th>
+											<th>count</th>
+											<th>percent</th>
+											<th>depth</th>
+											<th>&gt;&nbsp;2stdv</th>
+											<th>&gt;&nbsp;max</th>
+											<th>&lt;&nbsp;min</th>
+										</tr>
+									</thead>
+									<tbody> <!--to be filled programmatically-->									
+									</tbody>
+								</table>
+							</div>
+							<div id="table_control_div">
+								<div id="table_control_header" class="filter_ui_div">
+									<div id="filterControlTitle">Filters</div>
+									<div id="clearFilterButtonWrapper" >
+										<div id="clearFilterButton">Clear Filters</div>
+									</div>									
+								</div>
+								<div id="table_control_filters"></div>
+							</div>
+						</div>
+					</div> <!--tab_options-->
+					
+					<div id="tab_options" class="control_tabcontent">
+						Options and User Preferencs go here
+					</div> <!--tab_options-->
+					
+				</div> <!--control_panel-->
+				<div id="viz_panel">
+				</div>
+			</div>
+			
+
+			<!-- display of loading animation -->
+			<div id="on_loading_div"> 
+				<svg x="0px" y="0px" viewBox="0 0 100 100">
+				  <g>
+					<path fill="#fff" d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
+					  <animateTransform 
+						 attributeName="transform" 
+						 attributeType="XML" 
+						 type="rotate"
+						 dur="1s" 
+						 from="0 50 50"
+						 to="360 50 50" 
+						 repeatCount="indefinite" />
+					</path>
+				  </g>
+				</svg>
+				<p id="loading_text">Loading...</p>
+			</div>		
+		
+
+		<div id ="legend_box">
+			<button type="button" id="legend_activator" class="controlButton">Toggle Legend</button>
+		</div>
+
+		<div id="modal_popup">
+			<div id="modal_title" class="data_row_title"></div>
+			<div class="modal_table">				
+				<div id="detail_site_header" class="treeNode header_row">Site Data</div>
+				<div id="modal_count" class="treeNode data_row"></div>
+				<div id="modal_percent" class="treeNode data_row"></div>
+				<div id="detail_network_header" class="treeNode header_row">Network Stats</div>
+				<div id="modal_mean" class="treeNode data_row"></div>
+				<div id="modal_stdv" class="treeNode data_row"></div>
+				<div id="modal_max" class="treeNode data_row"></div>
+				<div id="modal_q3" class="treeNode data_row"></div>
+				<div id="modal_median" class="treeNode data_row"></div>
+				<div id="modal_q1" class="treeNode data_row"></div>				
+				<div id="modal_min" class="treeNode data_row"></div>
+				<div id="modal_site_count" class="treeNode data_row"></div>
+				<div id="modal_sumNode_total_count" class="sumNode header_row"></div>
+				<div id="modal_sumNode_outlier_count" class="sumNode header_row"></div>
+				<div id="modal_sumNode_higher_count" class="sumNode data_row"></div>
+				<div id="modal_sumNode_lower_count" class="sumNode data_row"></div>
+				<div id="modal_id" class="treeNode data_row"></div>
+			</div>
+			<div class="modal_graph">
+				<svg id="modal_popup_svg">
+				</svg>
+			</div>
+		</div>
+		
+		<div id="tutorial_popup">
+			<div id="tutorial_arrow">
+				
+			</div>
+			<div id="tutorial_box">
+				<div id="tutorial_header"></div>
+				<div id="tutorial_content"></div>
+				<div id="tutorial_footer">
+					<label id="tutorialPrevious" class="tutorialButton" style="display: inline-block;">Previous</label>
+					<label id="tutorialNext" class="tutorialButton" style="display: inline-block;">Next</label>
+				</div>
+			</div>
+		</div>
+
+		</div>
+		<!-- add javascript -->
+<!--		<script src="https://d3js.org/d3.v7.min.js"></script> 				<!-- online d3 min library -->
+		<script type="application/javascript" src="lib/d3.js"></script>  		<!-- local d3 normal -->
+		<script type="application/javascript" src="lib/split.min.js"></script>  <!-- local split.js min -->
+		<script type="application/javascript" src="lib/jszip.min.js"></script>  <!-- local jszip min -->
+		<script type="text/javascript" src="lib/jszip-utils.min.js"></script>	<!-- local jszip utils min -->
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> <!-- jquery -->
+		<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script> <!-- datatables -->
+		<script type="text/javascript" src="config.js"></script>				<!-- config params -->
+		<script type="application/javascript" src="stree.js"></script>  		<!-- custom js code  -->
+	</body>
+</html>

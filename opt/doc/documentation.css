@@ -1,0 +1,25 @@
+body 
+{
+	position: relative;
+	margin:0;
+}
+
+#header
+{
+	background: rgb(235,235,235);
+	height:50px;
+}
+
+#document_title
+{
+	position:absolute;
+	top:10px;
+	left:220px; 
+	display:inline-block;
+	font-size:30px;
+}
+
+#content
+{
+	padding:20px 16px 16px 16px;
+}

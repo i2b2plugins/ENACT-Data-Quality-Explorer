@@ -1,0 +1,705 @@
+/*******************************************************************************
+ * Copyright (c) 2023-2025 Massachusetts General Hospital 
+ * All rights reserved. The ENACT Data Quality Explorer (this program) 
+ * and the accompanying materials are made available under the terms 
+ * of the accompanying Mozilla Public License, v. 2.0 
+ * and the Healthcare Disclaimer: https://www.i2b2.org/software/i2b2_license.html
+********************************************************************************/
+
+body 
+{
+	position: fixed;
+	margin: 0;
+	inset: 0px;
+}
+
+#foundation
+{
+	position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 11px;
+    bottom: 0px;
+}
+
+#header
+{	
+    position: fixed;
+    background: #edeff6;
+    height: 50px;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+}
+
+
+input[type="file"] {
+    display: none;
+}
+
+#fileChooserButton
+{
+	/*width: 178px;*/
+}
+#fileChooserButton:hover {
+  background: #a3158d;
+  border: 1px solid #a3158d;
+}
+#file-name-display{
+    font-family: sans-serif;
+    font-size: medium;
+	background:white;
+	color:black;
+	padding-right:4px;
+	text-align:right;
+	display:none;
+}
+
+.file-loaded
+{ color: rgb(55, 4, 47); }
+
+.file-not-loaded
+{ color: grey; }
+
+#domain_selector_div
+{
+	white-space: nowrap;
+	height:30px;
+	color: white;
+    background: rgb(55, 4, 47);
+    border: 1px solid rgb(55, 4, 47);
+	display: none;
+    padding-right: 12px;
+}
+
+#domain_selector_label
+{
+	display:block;
+	cursor:default;
+}
+
+#domain_selector
+{	
+	font-family: sans-serif;
+	font-size:medium;
+	height: 22px;
+    border: 1px solid rgb(55, 4, 47);
+	margin-top:4px;
+    padding: 2px 0px;
+	cursor:pointer;
+	display:none;
+	position:relative;
+	width:100%;
+	top:-4px;
+}
+
+/* Loading Icon */
+#on_loading_div
+{
+  margin:auto;
+  display: none; /* initially invisible */
+  width: 140px;
+  height: 190px;
+  position: relative;
+  background: rgb(55, 4, 47);
+  top: 180px;  
+}
+
+#loading_text
+{
+  color: white; 
+  text-align: center
+}
+
+.controlButton
+{
+	font-family: sans-serif;
+	font-size:medium;
+	color: white;
+    background: rgb(55, 4, 47);
+    border: 1px solid rgb(55, 4, 47);
+	/*display: inline-block;*/
+    padding: 6px 12px;
+    cursor: pointer;
+	display:none;
+}
+
+
+#readDocButton
+{
+	display: inline-block;
+    position: absolute;
+    right: 235px;
+    top: 2px;
+	padding: 3px 12px;
+}
+#readDocButton:hover {
+  background: #a3158d;
+  border: 1px solid #a3158d;
+}
+#viewVideoButton
+{
+	display: inline-block;
+    position: absolute;
+    right: 120px;
+    top: 2px;
+	padding: 3px 12px;
+}
+#viewVideoButton:hover {
+  background: #a3158d;
+  border: 1px solid #a3158d;
+}
+#tutorialButton
+{
+	display: inline-block;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+	padding: 3px 12px;
+}
+#tutorialButton:hover {
+  background: #a3158d;
+  border: 1px solid #a3158d;
+}
+
+#tutorial_popup
+{
+	display: none;
+	position:absolute;
+}
+
+#tutorial_box
+{
+	display: inline-block;
+	max-width: 600px;
+	background: white;
+	padding: 5px 5px;
+	border: 3px solid #30a971;
+	font-family: sans-serif;
+    font-size: 14px
+}
+
+#tutorial_arrow
+{
+    width: 0px;
+	height: 0px;
+	position:absolute;
+}
+
+.tutorial_arrow_up
+{
+	border-top: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 15px solid #30a971;
+    border-left: 10px solid transparent;
+}
+
+.tutorial_arrow_down
+{
+	border-top: 15px solid #30a971;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid transparent;
+}
+
+.tutorial_arrow_left
+{
+	border-top: 10px solid transparent;
+    border-right: 15px solid #30a971;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid transparent;
+}
+
+.tutorial_arrow_right
+{
+	border-top: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 15px solid #30a971;
+}
+
+.tutorialButton
+{
+	font-family: sans-serif;
+	font-size:medium;
+	color: white;
+    background: #30a971;
+    border: 1px solid #30a971;
+	display: none;
+    padding: 6px 4px;
+    cursor: pointer;
+}
+
+#tutorial_header
+{
+	color: #30a971;
+	font-family: sans-serif;
+	font-size:medium;
+}
+
+#tutorial_footer
+{
+	height:29px;
+}
+
+#tutorialNext
+{
+	position:absolute;
+	right:5px;
+}
+#tutorialNext:hover
+{
+	padding: 6px 4px;
+	background:#52e9a3;
+	border: 1px solid #52e9a3;
+}
+
+#tutorialPrevious
+{
+	position:absolute;
+	right:50px;
+}
+#tutorialPrevious:hover
+{
+	background:#52e9a3;
+	border: 1px solid #52e9a3;
+}
+
+#spotlightDiv {
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  top: 50px;
+  left: 50px;	
+  /* for IE */
+  /* box-shadow: 0 0 0 1000px rgba(0,0,0,.3);*/
+  /* for real browsers */
+  box-shadow: 0 0 0 100vmax rgba(0,0,0,.3);
+  pointer-events: none;
+}
+
+/* detail box */
+#detail_title
+{
+	font-family: sans-serif;
+	/*background: #37042f;*/
+	color: black;
+    border-top-width: 0px;    
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+    padding-right: 3px;   
+}
+
+#detail_box {
+	background:white;
+	visibility: hidden;
+	border: 1px lightgray  solid;
+	padding-left:4px;
+	padding-right:4px;
+}
+
+.detail_table
+{
+	margin-top:10px;
+}
+.detail_graph
+{
+	margin-top:10px;
+	padding-left: 10px;
+}
+.modal_table
+{
+	float:left
+}
+.modal_graph
+{
+	float:left;
+	padding-left: 10px;
+}
+
+#detail_graph_svg
+{
+	width:180px;
+	height:164px;
+	background:white;
+}
+
+#data_row_title {
+	font-weight:bold;
+	font-size:12px;
+}
+
+/* modal box */
+#modal_popup
+{
+	position: absolute;
+	
+	visibility: hidden;
+	background: rgba(255,255,255, 0.9);
+	border-radius: 15px;
+	border: 3px solid lightgray;
+	padding-top:4px;
+	padding-left:6px;
+	padding-right:6px;
+	padding-bottom:4px;
+	z-index = 100;
+}
+#modal_title
+{
+	font-family: sans-serif;
+}
+#modal_popup_svg
+{
+	width:180px;
+	height:164px;
+}
+
+/* separating row header and value*/
+.row_header
+{
+	clear:both;
+}
+.row_value
+{
+	padding-left:6px;
+	float:right;
+}
+.material-block{
+	display: block;
+}
+.immaterial{
+	display: none;
+}
+.header_row{
+	font-family:sans-serif;
+	font-weight:normal;
+	font-size:12px;
+	margin-top:2px;
+}
+.data_row{
+	font-family:sans-serif;
+	font-weight:normal;
+	font-size:12px;
+	padding-left:10px;
+}
+.data_row_high{	
+	background:#ffc253;
+	font-weight:bold;
+}
+.data_row_low{
+	background:rgb(144, 239, 237);
+	font-weight:bold;
+}
+
+/* legend box */
+#legend_box{
+	position: fixed;
+    top: 30px;
+    right: 2px;
+}
+#legend_svg{
+	clear:both;
+	display: block;
+}
+#legend_activator{
+    width:100%;
+	display:none;
+}
+#legend_activator:hover {
+  background: #a3158d;
+  border: 1px solid #a3158d;
+}
+
+
+/* pathView */
+.pathView_closeIcon
+{	stroke: #f3f3f3;
+	fill:	#f3f3f3;
+}
+.pathView_closeIcon_on
+{	stroke: black;
+	fill:	black;
+}
+.pathView_closeIconLine
+{	stroke: darkgray;
+	/*fill:	white;*/
+}
+.pathView_closeIconLine_on
+{	stroke: white;
+	/*fill:	white;*/
+}
+.pathView_navigateDown
+{ 	stroke: white;
+	fill:	black;
+}
+.pathView_navigateDown_on
+{	stroke: black;
+	fill:	black;
+}
+.pathView_navigateUp
+{ 	stroke: white;
+	fill:	black;
+}
+.pathView_navigateUp_on
+{	stroke: black;
+	fill:	black;
+}
+
+/* higher/lower count icons for popup/detail display */
+.higherCountIcon
+{
+	float:left;
+	background:#ffc253;
+	border-top: 1px white solid;
+	border-bottom: 1px white solid;
+	border-right: 4px white solid;
+	width:11px;
+	height:11px;
+}
+
+.lowerCountIcon
+{
+	float:left;
+	background:#90efed;
+	border-top: 1px white solid;
+	border-bottom: 1px white solid;
+	border-right: 4px white solid;
+	width:11px;
+	height:11px;
+}
+
+/* css for svg elements in mean/stdv graphs */
+.meanGraphLines
+{
+	fill:gray;
+	stroke:gray;
+	stroke-width":1px;
+	stroke-opacity:1;
+	fill-opacity:1;
+}
+
+.valueGraphLines
+{
+	fill:purple;
+	stroke:purple;
+	stroke-width":1px;
+	stroke-opacity:1;
+	fill-opacity:1;
+}
+
+.networkValueGraphLines
+{
+	fill:gray;
+	stroke:gray;
+	stroke-width":1px;
+	stroke-opacity:1;
+	fill-opacity:1;
+}
+
+/* SplitJS CSS */
+.main-split_pane {
+    display: flex;
+    flex-direction: row;
+	position: absolute;	
+	top: 39px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+.gutter {
+    background-color: #eee;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+.gutter.gutter-horizontal {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+    cursor: col-resize;
+}
+
+
+#tablePanel{
+    display: flex;
+    flex-direction: row;
+	position: relative;	
+	top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;	
+}
+
+#control_panel
+{
+	background:#edeff6;
+	overflow:hidden;
+}
+#viz_panel
+{
+	background:white;
+	overflow-y: scroll;
+}
+
+/* Tabs */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px 14px;
+  transition: 0.3s;
+}
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: white;
+  border: 1px solid #37042f;
+}
+
+/* Style the tab content */
+.control_tabcontent {
+  display: none;
+  font-family:sans-serif;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+/* Style for Datatable */
+#myTable_wrapper
+{
+  font-size: 12px;
+  font-family: sans-serif;	
+}
+#myTable_wrapper thead
+{
+	background:white;
+}
+#myTable td {
+
+  padding: 1px 0px 1px 2px;
+}
+#filterToggle /* custom FILTER TOGGLE */
+{
+	float: right;
+    cursor: pointer;
+    color: black;
+    padding: 3px 4px 3px 4px;
+    background: white;
+    border: 1px solid #37042f;
+}
+#filterToggle:hover {
+  background: #a3158d;
+  border: 1px solid #a3158d;
+  color: white;
+}
+
+#clearFilterButton
+{
+    cursor: pointer;
+    color: black;
+    padding: 3px 4px 3px 4px;
+    background: white;
+    border: 1px solid #37042f;
+	width: 68px;
+}
+#clearFilterButton:hover {
+  background: #a3158d;
+  border: 1px solid #a3158d;
+  color: white;
+}
+
+#clearFilterButtonWrapper
+{
+	background: white;
+	display: inline-block;
+    position: relative;
+}
+#filterControlTitle
+{
+	font-family:sans-serif;
+	font-size:larger;
+	font-weight:bold;
+	display: inline-block;
+    margin-right: 40px;
+}
+
+/* styles for generated FILTER CONTROLS */
+#table_control_div
+{
+	font-size:12px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+.filter_ui_div
+{
+	border-bottom: 0.5px solid lightgray;
+    border-left: 0.5px solid lightgray;
+    padding-bottom: 2px;
+}
+.filter_title
+{
+	font-weight: bolder;
+	padding-top: 6px;
+	padding-left: 3px;
+}
+.checkbox_label
+{
+	position:relative;
+	left:30px;
+}
+.checkbox
+{
+	position:relative;
+	left:30px;
+}
+.textInput
+{
+	left: 42px;
+    position: relative;
+}
+#name_textInput
+{	
+	width: 125px; 
+}
+.numberInputLabel
+{
+	position:relative;
+	left:14px;
+}
+.numberInput_min
+{
+    position: relative;
+    left: 20px;
+    width: 80px;
+}
+.numberInput_max
+{
+    position: relative;
+    left: 16px;
+    width: 80px;
+}
+
+/* pulsing animation to identify target node */
+.pulsingTarget 
+{ 
+	animation: pulsingTarget 0.5s ease 5 alternate; 
+	stroke: red;
+	fill: none;
+	r: 10;
+}
+@keyframes pulsingTarget {
+  0% {
+    opacity: 0.25;
+  }
+  100% {
+   opacity: 1;
+  }
+}

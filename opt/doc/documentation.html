@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ENACT Data Quality Explorer User Documentation</title>
+		<link rel="stylesheet" href="documentation.css">
+	</head>
+	<body>
+		<div id="header">
+			<div>
+				<img src="img/ENACT_LogoFile_2023-02(002).webp" id="logo" alt="ENACT logo" border="0" class="text-center" style="height:80px">
+			</div>
+			<label id="document_title" > ENACT Data Quality Explorer User Documentation </label>
+			<div id="content">
+				<h2>I. Introduction</h2>
+				<p>The ENACT Data Quality Explorer (DQE) allows you to compare your site's totalnum with the ENACT network statistics. 
+				   You open your site totalnum file using this tool. The tool computes the ratio of counts of any ENACT ontology concepts 
+				   divided by total number of patients at your site, expressed as a percentage. This percentage can then be compared with 
+				   ENACT network statistics to detect missing counts and discover outliers. Any site can use this tool to perform data quality self-checks.
+				   DQE is unique in that it uses network statistics as a barometer for data quality. The underlying assumption is that the overall 
+				   percentage of patients with specific facts will generally be similar across hospital sites. Therefore fact types at sites that are 
+				   much less/more frequent than the average could point to possible ETL problems.
+				   DQE also empowers sites to perform self-service data quality checks without submitting site data anywhere. </p>
+				<h3>Totalnum</h3>
+				<p>The ENACT network provides an open-source script to compute the patient counts for all 
+				   concept in all ENACT ontologies at a site (see documentation in <a href="https://community.i2b2.org/wiki/pages/viewpage.action?pageId=83001346">i2b2 community wiki</a>). 
+				   A totalnum file is the result of running this high-performance counting script, which is available for SQLServer, Oracle, and Postgres databases. It 
+				   is used as a starting point of assessing the quality of data at each site. Irregularities in the
+				   counts may be indicative of mapping issues or ETL errors. Additionally, examining totalnum longitudinally can 
+				   reveal differences between data loads.</p>
+				<p>One important feature of the totalnum computed by the script is that the counts are obfuscated. 
+				   A random number following a Gaussian distribution is added to the real count to create an obfuscated count. 
+				   A real count that is fewer than 10 is marked as -1. This obfuscation allows sites to contribute their totalnum 
+				   to the network and share them with other ENACT sites. For brevity, counts of patients always mean 
+				   obfuscated count of patients in this document, unless otherwise specified.</p>
+				<p>We understand there exist sites would like to perform data quality checks before to eventually submitting their counts to the ENACT network. 
+				   DQE fully supports this workflow by requiring only users to have a totalnum file. DQE is a javascript web application that runs on a 
+				   browser and does not transmit any data anywhere. Sites can be assured that their data remains private.</p>
+				   
+				<h3>Computation of Network Statistics</h3>
+				<p>Many ENACT sites contribute their totalnum to the ENACT network. The ENACT network computes the mean, 
+				   standard deviation, min, max, median, and quartiles for the percentage of all concepts of ENACT ontologies across all 
+				   contributing sites. These network statics are made available to DQE. Sites can compare their own data 
+				   with the network statistics. Comparing site data with network statistics is a novel way to perform data quality checks.</p>
+				<p>When loading your site's totalnum result into the tool, your site's counts are transformed into percentages. 
+				   For the concept C, its percentage is defined as its count over the count of <span>\denominator\facts\</span>, a concept that 
+				   represents all patients at that site.
+				<div id="percentage_formula">
+					Percentage<sub>c</sub> = 100 x 
+					<math display = "inline-block">					  
+					  <mfrac>
+					   <msub><mi>Count</mi><mn>c</mn></msub>
+					   <msub><mi>Count</mi><mn>\denominator\facts\</mn></msub>
+					  </mfrac>					 
+					</math>
+				</div>
+				 <p> The percentage of a concept can then be compared with ENACT network statistics. DQE considers site percentage an 
+				   outlier if it is two standard diviations away from the network mean. Extreme values may be due to mapping errors for the counts 
+				   -- or there are reasonable explanations for a particular site (e.g. site patient population are skewed due to speciality care at the site
+				   or geographical location). In any case, outliers are highlighted in DQE so users can further investigate them.</p>
+				
+				<h2 id="fileformat">II. Totalnum File Format</h2>
+				<p>When you select the <b>Choose a Totalnum File</b>, you can navigate and select a totalnum file of your choice on your computer. 
+				   The tool uses client-side javascript to parse your file. No data is transmitted anywhere. Your file stays within the safe 
+				   confines of your browser.<p>
+				<p>Your selected totalnum file must conform to the following standards, or it will be rejected by the tool.<p>
+				<ol>
+					<li><b>Three Columns:</b> Your file must contain three columns. The first column must be <b>c_fullname</b>. 
+											  The second column must be <b>agg_count</b>, and the last column must be <b>agg_date</b>. 
+											  Every row of the file therefore contains a concept's c_fullname, its aggregated count, 
+											  and when the count was performed.</li>
+					<li><b>Headers:</b> Your file must contain a header row of the three columns.
+					<li><b>Delimted:</b> The columns must be separated by tabs (tab-separated-value format) or commas (comma-separated-value format). You columns must either be tab-delimited or comma-delimited, not a mix of both.</li>
+					<li><b>File Extension:</b> DQE only looks for files with the following files extension <b>.tsv</b>, <b>.csv</b>, or <b>.txt</b>.</li>
+					<li><b>\denominator\facts\:</b> One of the rows in your file must be the concept \denominaotor\facts\. This 
+													 count represents the total number of patients in a site. The tool relies on it to 
+													 correctly compute the percentage of a given condition. For example, if your 
+													 \denomniator\facts\ has a count of 10000, and the count for 
+													 \ACT\Demographics\Age\35-44 years old\37 years old\ is 900, then your site percentage for 
+													 37-year old patients is 9%.<p></li>
+				</ol>
+				<img src="img/sample_totalnums_formt.png" id="fileformat" alt="totalnums file format" border="0" class="text-center" style="height:170px" display="inline-block">
+				<p>This is a partial screen of a totalnums file. There is a header of three columns, each separated by a tab. Each row
+				   is a concept, with its c_fullname, agg_count, and agg_date values.</p>
+				<p>When the tool parses your totalnums file, every count of -1 is converted into 5 so the negative count will not 
+				   turn computed percentages into a negative number. The same is done to counts in the network to compute safely for the
+				   network statistics.</p>
+				
+				<h2 id="legend">III. Select an ENACT Domain Ontology</h2>
+				
+				
+				<h2 id="legend">VI. Legend</h2>
+				<p style="display:inline-block;">
+				<img src="img/legend.png" id="logo" alt="ENACT logo" border="0" class="text-center" style="height:300px" display="inline-block">
+				The legend shows how the sizes and colors encode the nodes in the visualization. The sizes indicate the site patient count. If
+				a node has no count, it is shown as a small circle with no fill. Purple outlines indicate that a descendant 
+				of this node is an outlier. Grey outlines mean no descendants of this node is an outlier. The fill colors indicate
+				whether node is an outlier. Orange means this node's prevelance is more than 2 standard diviations higher than the network mean. 
+				Light blue means this node's prevelance is more than 2 standard diviations lower than the network mean. Gray means this node
+				is not considered an outlier.
+				<p>
+				
+				
+				<h2>IV. Visualization</h2>
+				<p>Under Development<p>
+				
+				<h3>1. Node-Link View</h3>
+				<p><p>
+				
+				<h3>2. SumTree View</h3>
+				<p><p>
+				<h3>3. Tabular View</h3>
+				<p><p>
+				
+			</div>
+		</div>
+	</body>
+</html>
