@@ -20,7 +20,7 @@ DQE juxtposes a site's data to the network statistics and automatically highligh
 Here we describe how ENACT fulfills these requirements to help you set up your own instance of DQE for your network:
 1. The ENACT network is built on top of [Informatics for Integration Biology & the Bedside (i2b2)](https://www.i2b2.org/). Every site in network shares its obfuscated patient counts via network-wide queries. [i2b2 1.8 and above](https://www.i2b2.org/software/index.html?_gl=1*vwtry7*_ga*MTk5NTAzNzI2NC4xNzMzNTE2NjY1*_ga_ZGEPXGD7XT*MTczOTgwNDk4Mi4xNC4xLjE3Mzk4MDUxOTkuMC4wLjA.) comes with a counting methodology called ["totalnum"](https://community.i2b2.org/wiki/pages/viewpage.action?pageId=83001346), which is the standard counting methodology ENACT uses.
 2. The ENACT network collects totalnum from member sites and computes network statistics regularly.
-3. The network statistics are stored in files and hosted by ENACT. The ENACT instance of DQE is authorized to access the files.
-4. The ENACT network provides a dictionary file that contains the all ontologies terms. This dictionary file is also made accessible by the ENACT instance of DQE.
+3. The network statistics files (.zip) and hosted by ENACT. The ENACT instance of DQE is authorized to access the files.
+4. The ENACT network provides a dictionary file (.zip) that contains the all ontologies terms. This dictionary file is also made accessible by the ENACT instance of DQE.
 5. Users would use their browser to visit the ENACT-hosted DQE and use DQE to open their local totalnum file to assess if their ETL might have outliers or missing data.
 
