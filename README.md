@@ -25,7 +25,7 @@ Here we describe how ENACT fulfills these requirements to help you set up your o
 
    [<img src="img/data_dictionary_screen.png" width="400px">](img/data_dictionary_screen.png)
   
-5. Users would use their browser to visit the ENACT-hosted DQE and use DQE to open their local totalnum file to assess if their ETL might have outliers or missing data. Below is a screen shot of a sample site's totalnum result file. The first line is the header, which contains c_fullname, agg_count, and agg_date. c_fullname is the full path of an ontology item. This is used to match the ontology concept defined in the data dictionary file. agg_count is the obfuscated count of local site for that ontology concept. agg_date is the date the counting occurred. [Documentation](/opt/doc/documentation.html) contains more details on this file.
+5. Users would use their browser to visit the ENACT-hosted DQE and use DQE to open their local totalnum file to assess if their ETL might have outliers or missing data. Below is a screen shot of a sample site's totalnum result file. The first line is the header, which contains c_fullname, agg_count, and agg_date. c_fullname is the full path of an ontology item. This is used to match the ontology concept defined in the data dictionary file. agg_count is the obfuscated count of local site for that ontology concept. agg_date is the date the counting occurred. The documentation file in /opt/doc/documentation.html contains more details on this file.
    
    [<img src="opt/doc/img/sample_totalnums_formt.png" width="400px">](opt/doc/img/sample_totalnums_formt.png)
 
